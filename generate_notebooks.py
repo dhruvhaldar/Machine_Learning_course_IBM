@@ -1,5 +1,6 @@
 import os
 import nbformat as nbf
+from nbconvert.preprocessors import ExecutePreprocessor
 
 def create_notebook(title, description, code_cells, filename):
     nb = nbf.v4.new_notebook()
@@ -36,6 +37,13 @@ from sklearn.metrics import confusion_matrix, classification_report
             nb.cells.append(nbf.v4.new_markdown_cell(content))
         else:
             nb.cells.append(nbf.v4.new_code_cell(content))
+
+    # Execute the notebook
+    ep = ExecutePreprocessor(timeout=600, kernel_name='python3')
+    try:
+        ep.preprocess(nb, {'metadata': {'path': os.path.dirname(filename)}})
+    except Exception as e:
+        print(f"Error executing notebook {filename}: {e}")
 
     # Write to file
     with open(filename, 'w') as f:
