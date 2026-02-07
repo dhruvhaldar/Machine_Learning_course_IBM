@@ -28,6 +28,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import metrics
 from sklearn.metrics import confusion_matrix, classification_report
 
+# Ensures that plots are displayed directly inside the notebook
 %matplotlib inline"""
     nb.cells.append(nbf.v4.new_code_cell(imports_code))
 
@@ -317,8 +318,13 @@ data = load_digits()
 X = data.data
 y = data.target
 
+# Visualize the first 4 images
 plt.gray()
-plt.matshow(data.images[0])
+fig, axes = plt.subplots(1, 4, figsize=(10, 3))
+for ax, image, label in zip(axes, data.images[:4], data.target[:4]):
+    ax.set_axis_off()
+    ax.imshow(image, cmap=plt.cm.gray_r, interpolation='nearest')
+    ax.set_title(f'Training: {label}')
 plt.show()"""),
                 ('markdown', '## 2. Train Model'),
                 ('code', """from sklearn.ensemble import RandomForestClassifier
