@@ -3,4 +3,8 @@ pandas
 matplotlib
 scikit-learn
 joblib
-streamlit
+jupyter
+nbformat
+nbconvert
+ipykernel
+seaborn
